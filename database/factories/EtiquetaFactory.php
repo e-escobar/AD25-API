@@ -17,7 +17,7 @@ class EtiquetaFactory extends Factory
     public function definition(): array
     {
         return [
-            'nombre' => fake()->word(), // Nombre de la etiqueta
+            'nombre' => fake()->word(), // Nombre de la etiqueta, word genera una palabra aleatoria
         ];
     }
 }

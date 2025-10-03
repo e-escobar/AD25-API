@@ -17,13 +17,13 @@ class RecetaFactory extends Factory
     public function definition(): array
     {
         return [
-            'categoria_id' => \App\Models\Categoria::all()->random()->id, // Asignar una categoria aleatoria existente
-            'user_id' => \App\Models\User::all()->random()->id, // Asignar un usuario aleatorio existente
-            'titulo' => fake()->sentence(), // Título de la receta
-            'descripcion' => fake()->text(), // Descripción de la receta
-            'ingredientes' => fake()->text(), // Ingredientes de la receta
-            'instrucciones' => fake()->text(), // Instrucciones de la receta
-            'imagen' => fake()->imageUrl(640, 480), // URL de una imagen aleatoria
+            'categoria_id' => \App\Models\Categoria::all()->random()->id, // Asignar una categoria aleatoria existente a la receta 
+            'user_id' => \App\Models\User::all()->random()->id, // Asignar un usuario aleatorio existente como autor de la receta 
+            'titulo' => fake()->sentence(), // sentence genera una frase aleatoria
+            'descripcion' => fake()->text(), // text genera un texto aleatorio
+            'ingredientes' => fake()->text(), 
+            'instrucciones' => fake()->text(), 
+            'imagen' => fake()->imageUrl(640, 480), // imageUrl genera una URL de imagen aleatoria
         ];
     }
 }
