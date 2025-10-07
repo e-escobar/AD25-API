@@ -15,4 +15,14 @@ class Receta extends Model
         return $this->belongsToMany(Etiqueta::class);
     }
 
+    // Una receta pertenece a una categoria  
+    public function categoria() {
+        return $this->belongsTo(Categoria::class);
+    }
+   
+    // Una receta pertenece a un usuario
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
+
 }
