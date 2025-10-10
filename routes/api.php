@@ -21,6 +21,6 @@ Route::get('etiquetas', [EtiquetaController::class, 'index']);
 Route::get('etiquetas/{etiqueta}', [EtiquetaController::class, 'show']);
 
 
-// Route::get('/user', function (Request $request) {
-//     return $request->user();
-// })->middleware('auth:sanctum');
+    // Route::get('/user', function (Request $request) {
+    //     return $request->user();
+    // })->middleware('auth:sanctum');

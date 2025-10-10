@@ -16,8 +16,8 @@ class CategoriaController extends Controller
 
     // Muestra una categoria a partir de su id
     public function show(Categoria $categoria){
-        return $categoria; // Devuelve la categoria
-        // return $categoria->load('recetas'); // Carga las recetas asociadas a la categoria
+        // return $categoria; // Devuelve la categoria
+        return $categoria->load('recetas'); // Carga las recetas asociadas a la categoria
     }
 
 
