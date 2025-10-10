@@ -5,6 +5,8 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+use App\Http\Resources\RecetaResource; // Importar el recurso RecetasResource
+
 class EtiquetaResource extends JsonResource
 {
     /**
@@ -21,8 +23,8 @@ class EtiquetaResource extends JsonResource
                 'nombre' => $this->nombre
             ],
             'relaciones' => [  // Estructuramos las relaciones de la etiqueta
-                'recetas' => $this->recetas
-                // 'recetas' => RecetasResource::collection($this->recetas)  // Usamos el recurso RecetasResource para formatear las recetas relacionadas
+                //'recetas' => $this->recetas
+                'recetas' => RecetaResource::collection($this->recetas)  // Usamos el recurso RecetasResource para formatear las recetas relacionadas
             ],
         ];
 
