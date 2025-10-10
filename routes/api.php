@@ -9,16 +9,13 @@ use App\Http\Controllers\Api\RecetaController;
 use App\Http\Controllers\Api\EtiquetaController;
 
 // Rutas de categorias 
-Route::get('categorias', [CategoriaController::class, 'index']);
-Route::get('categorias/{categoria}', [CategoriaController::class, 'show']);
+Route::apiResource('categorias', CategoriaController::class);
 
-// Rutas de recetas 
-Route::get('recetas', [RecetaController::class, 'index']);
-Route::get('recetas/{receta}', [RecetaController::class, 'show']);
+// Rutas de recetas
+Route::apiResource('recetas', RecetaController::class);
 
 // Rutas de etiquetas
-Route::get('etiquetas', [EtiquetaController::class, 'index']);
-Route::get('etiquetas/{etiqueta}', [EtiquetaController::class, 'show']);
+Route::apiResource('etiquetas', EtiquetaController::class);
 
 
     // Route::get('/user', function (Request $request) {
