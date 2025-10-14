@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Resources\RecetaResource;  // Importar el recurso RecetasResource
 use App\Http\Requests\StoreRecetasRequest;  // Importar la request StoreRecetasRequest
 use App\Http\Requests\UpdateRecetasRequest; // Importar la request UpdateRecetasRequest
+use Symfony\Component\HttpFoundation\Response; // Importar la clase Response para los códigos de estado HTTP
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -35,7 +36,7 @@ class RecetaController extends Controller
         $receta->etiquetas()->attach(json_decode($request->etiquetas));  // Asociar las etiquetas a la receta (decodificar el JSON recibido)
        
         // Devolver la receta creada como recurso API con código de estado 201 (creado) 
-        return response()->json(new RecetasResource($receta), Response::HTTP_CREATED); 
+        return response()->json(new RecetaResource($receta), Response::HTTP_CREATED); 
     }
 
     // Actualiza una receta existente
@@ -47,7 +48,7 @@ class RecetaController extends Controller
         }
 
         // Devolver la receta actualizada como recurso API con código de estado 200 (OK)
-        return response()->json(new RecetasResource($receta), Response::HTTP_OK);
+        return response()->json(new RecetaResource($receta), Response::HTTP_OK);
     }
 
     // Elimina una receta existente
