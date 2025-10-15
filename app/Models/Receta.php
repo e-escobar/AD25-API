@@ -12,7 +12,7 @@ class Receta extends Model
 
     protected $fillable = [  // Campos que se pueden asignar masivamente 
         'categoria_id',
-        'usuario_id',
+        'user_id',
         'titulo',
         'descripcion',
         'ingredientes',
