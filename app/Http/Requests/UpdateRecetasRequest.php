@@ -23,7 +23,7 @@ class UpdateRecetasRequest extends FormRequest
     {
         return [
             'categoria_id' => 'sometimes|exists:categorias,id', // La categoria_id es opcional y debe existir en la tabla categorias
-            'user_id' => 'sometimes|exists:users,id', // La usuario_id es opcional y debe existir en la tabla users
+            // 'user_id' => 'sometimes|exists:users,id', // La usuario_id es opcional y debe existir en la tabla users
             'titulo' => 'sometimes|string|max:255', // El titulo es opcional, debe ser una cadena y no debe exceder los 255 caracteres
             'descripcion' => 'sometimes|string', // La descripcion es opcional y debe ser una cadena
             'ingredientes' => 'sometimes|string', // Los ingredientes son opcionales y deben ser una cadena
