@@ -28,7 +28,7 @@ class UpdateRecetasRequest extends FormRequest
             'descripcion' => 'sometimes|string', // La descripcion es opcional y debe ser una cadena
             'ingredientes' => 'sometimes|string', // Los ingredientes son opcionales y deben ser una cadena
             'instrucciones' => 'sometimes|string', // Las instrucciones son opcionales y deben ser una cadena
-            'imagen' => 'sometimes|image|max:2048', // La imagen es opcional, debe ser un archivo de imagen y no debe exceder los 2MB
+            'imagen' => 'sometimes|mimes:webp,jpeg,png,jpg,gif,svg|max:2048', // La imagen es opcional, debe ser un archivo de imagen y no debe exceder los 2MB
             'etiquetas' => 'sometimes|array', // Las etiquetas son opcionales y deben ser un array
         ];
 
