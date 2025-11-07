@@ -21,24 +21,21 @@ class RecetaController extends Controller
 
     // Muestra todas las recetas
     public function index(){
-        // return Receta::all(); // Devuelve todas las recetas
-        // return Receta::with('categoria', 'etiquetas', 'user')->get(); // Carga las relaciones categoria, etiquetas y user
+        $this->authorize('Ver recetas');  
         $recetas = Receta::with('categoria', 'etiquetas', 'user')->get();
         return RecetaResource::collection($recetas); // Devuelve todas las recetas como recurso API
     }
 
     // Muestra una receta a partir de su id
     public function show(Receta $receta){
-        // return $receta; // Devuelve la receta
-        //return $receta->load('categoria', 'etiquetas', 'user'); // Carga las relaciones categoria, etiquetas y user
+        $this->authorize('Ver recetas');  
         $receta = $receta->load('categoria', 'etiquetas', 'user');
         return new RecetaResource($receta); // Devuelve la receta como recurso API 
     }
 
     // Almacena una nueva receta 
     public function store(StoreRecetasRequest $request){  // Usar la request StoreRecetasRequest para validar los datos
-        // $receta = Receta::create($request->all());  // Crear una nueva receta con los datos validados
-        // $receta->etiquetas()->attach(json_decode($request->etiquetas));  // Asociar las etiquetas a la receta (decodificar el JSON recibido)
+        $this->authorize('Crear recetas');  
        
         $receta = $request->user()->recetas()->create($request->all());  // Crear una nueva receta asociada al usuario autenticado
         $receta->etiquetas()->attach(json_decode($request->etiquetas));  // Asociar las etiquetas a la receta (decodificar el JSON recibido)
@@ -52,6 +49,8 @@ class RecetaController extends Controller
 
     // Actualiza una receta existente
     public function update(UpdateRecetasRequest $request, Receta $receta){  // Usar la request UpdateRecetasRequest para validar los datos
+        $this->authorize('Editar recetas');
+
         $this->authorize('update', $receta);  // Autorizar la acción usando la política RecetaPolicy
         
         $receta->update($request->all());  // Actualizar la receta con los datos validados
@@ -72,6 +71,8 @@ class RecetaController extends Controller
 
     // Elimina una receta existente
     public function destroy(Receta $receta){  // Inyectar la receta a eliminar
+        $this->authorize('Eliminar recetas');
+        
         $this->authorize('delete', $receta);  // Autorizar la acción usando la política RecetaPolicy
         
         $receta->delete();  // Eliminar la receta

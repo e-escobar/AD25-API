@@ -21,15 +21,22 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        $this->call(RolSeeder::class);  // Llamar al seeder de roles
 
         User::factory()->create([
             'name' => 'Eric Escobar Mendoza',
             'email' => 'eescobar@laravel.com',
-        ]);
+        ])-> assignRole('Administrador');  // Asignar rol de Administrador al usuario creado
 
-        User::factory(29)->create();
+        User::factory()->create([
+            'name' => 'Iraic Alcantar',
+            'email' => 'iraic@gmail.com',
+        ])-> assignRole('Editor');  // Asignar rol de Editor al usuario Iraic
 
+
+        User::factory(29)->create()->each(function ($user) {
+            $user->assignRole('Usuario');
+        });  // Crear 29 usuarios y les asigna el rol de Usuario
 
         Categoria::factory(10)->create();
         Receta::factory(100)->create();
