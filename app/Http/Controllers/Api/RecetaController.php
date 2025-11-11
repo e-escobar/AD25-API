@@ -72,7 +72,7 @@ class RecetaController extends Controller
     // Elimina una receta existente
     public function destroy(Receta $receta){  // Inyectar la receta a eliminar
         $this->authorize('Eliminar recetas');
-        
+
         $this->authorize('delete', $receta);  // Autorizar la acción usando la política RecetaPolicy
         
         $receta->delete();  // Eliminar la receta

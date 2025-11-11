@@ -30,7 +30,7 @@ class DatabaseSeeder extends Seeder
 
         User::factory()->create([
             'name' => 'Iraic Alcantar',
-            'email' => 'iraic@gmail.com',
+            'email' => 'iraic@laravel.com',
         ])-> assignRole('Editor');  // Asignar rol de Editor al usuario Iraic
 
 
