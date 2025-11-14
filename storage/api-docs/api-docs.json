@@ -1,0 +1,132 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Recetas API REST con Laravel",
+        "contact": {
+            "email": "eescobar@cdhidalgo.tecnm.mx"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://127.0.0.1:8000"
+        }
+    ],
+    "paths": {
+        "/api/recetas": {
+            "get": {
+                "tags": [
+                    "Recetas"
+                ],
+                "summary": "Consultar todas las recetas",
+                "description": "Retorna todas las recetas",
+                "operationId": "7fe2d12ff17a51d03f3e797a145cb881",
+                "responses": {
+                    "200": {
+                        "description": "Operación exitosa"
+                    },
+                    "403": {
+                        "description": "No autorizado"
+                    },
+                    "404": {
+                        "description": "No se encontraron recetas"
+                    },
+                    "405": {
+                        "description": "Método no permitido"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Recetas"
+                ],
+                "summary": "Crear receta",
+                "description": "Crear una nueva receta",
+                "operationId": "fc34e6e4587dc1faa58c704f2af7f516",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "categoria_id",
+                                    "titulo",
+                                    "descripcion",
+                                    "ingredientes",
+                                    "instrucciones",
+                                    "imagen",
+                                    "etiquetas"
+                                ],
+                                "properties": {
+                                    "categoria_id": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "titulo": {
+                                        "type": "string",
+                                        "example": "Receta 1"
+                                    },
+                                    "descripcion": {
+                                        "type": "string",
+                                        "example": "descripcion de la receta"
+                                    },
+                                    "ingredientes": {
+                                        "type": "string",
+                                        "example": "Preparación de la receta"
+                                    },
+                                    "instrucciones": {
+                                        "type": "string",
+                                        "example": "instrucciones de la receta"
+                                    },
+                                    "imagen": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "etiquetas": {
+                                        "type": "string",
+                                        "example": "[1,2,3]"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Receta creada"
+                    },
+                    "403": {
+                        "description": "No autorizado"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Recetas",
+            "description": "Recetas"
+        }
+    ],
+    "components": {
+        "securitySchemes": {
+            "bearer_token": {
+                "type": "apiKey",
+                "description": "Sacntum bearer token",
+                "name": "Authorization",
+                "in": "header"
+            }
+        }
+    }
+}

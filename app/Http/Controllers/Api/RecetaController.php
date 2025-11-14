@@ -19,12 +19,72 @@ class RecetaController extends Controller
 {
     use AuthorizesRequests; // Usar el trait AuthorizesRequests para la autorización de políticas
 
+    /**
+     * @OA\Get(
+     *    path="/api/recetas",
+     *    summary="Consultar todas las recetas",
+     *    description="Retorna todas las recetas",
+     *    tags={"Recetas"},
+     *    security={{"bearer_token":{}}},
+     *    @OA\Response(
+     *       response=200,
+     *      description="Operación exitosa",
+     *   ),
+     *   @OA\Response(
+     *     response=403,
+     *     description="No autorizado"
+     *   ),
+     *   @OA\Response(
+     *     response=404,
+     *     description="No se encontraron recetas"
+     *   ),
+     *   @OA\Response(
+     *    response=405,
+     *    description="Método no permitido"
+     *   )
+     * )
+     */
+
     // Muestra todas las recetas
     public function index(){
         $this->authorize('Ver recetas');  
         $recetas = Receta::with('categoria', 'etiquetas', 'user')->get();
         return RecetaResource::collection($recetas); // Devuelve todas las recetas como recurso API
     }
+
+    /**
+     * @OA\Post(
+     *    path="/api/recetas",
+     *    summary="Crear receta",
+     *    description="Crear una nueva receta",
+     *    tags={"Recetas"},
+     *    security={{"bearer_token":{}}},
+     *    @OA\RequestBody(
+     *       required=true,
+     *       @OA\MediaType(
+     *          mediaType="multipart/form-data",
+     *          @OA\Schema(
+     *              required={"categoria_id","titulo","descripcion","ingredientes","instrucciones","imagen","etiquetas"},
+     *              @OA\Property(property="categoria_id", type="integer", example="1"),
+     *              @OA\Property(property="titulo", type="string", example="Receta 1"),
+     *              @OA\Property(property="descripcion", type="string", example="descripcion de la receta"),
+     *              @OA\Property(property="ingredientes", type="string", example="Preparación de la receta"),
+     *              @OA\Property(property="instrucciones", type="string", example="instrucciones de la receta"),
+     *              @OA\Property(property="imagen", type="string", format="binary"),
+     *              @OA\Property(property="etiquetas", type="string", example="[1,2,3]")
+     *         )
+     *       )
+     *    ),
+     *    @OA\Response(
+     *       response=201,
+     *       description="Receta creada",
+     *    ),
+     *    @OA\Response(
+     *       response=403,
+     *       description="No autorizado"
+     *    )
+     * )
+     */
 
     // Muestra una receta a partir de su id
     public function show(Receta $receta){
