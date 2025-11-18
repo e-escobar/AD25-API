@@ -1,43 +1,102 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "Recetas API REST con Laravel",
-        "contact": {
-            "email": "eescobar@cdhidalgo.tecnm.mx"
-        },
+        "title": "API Documentation",
         "version": "1.0.0"
     },
     "servers": [
         {
-            "url": "http://127.0.0.1:8000"
+            "url": "http://localhost:8000"
         }
     ],
     "paths": {
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Autenticación"
+                ],
+                "summary": "Iniciar sesión de usuario",
+                "operationId": "7fe7085e1df995c6c2ee884a80eb30d6",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "correo",
+                                    "contraseña",
+                                    "dispositivo"
+                                ],
+                                "properties": {
+                                    "correo": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "eescobar@laravel.com"
+                                    },
+                                    "contraseña": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "password"
+                                    },
+                                    "dispositivo": {
+                                        "type": "string",
+                                        "example": "Mi dispositivo"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Inicio de sesión exitoso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "object"
+                                        },
+                                        "attributes": {
+                                            "type": "object"
+                                        },
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "nombre": {
+                                            "type": "string",
+                                            "example": "Juan Pérez"
+                                        },
+                                        "correo": {
+                                            "type": "string",
+                                            "example": ""
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/recetas": {
             "get": {
                 "tags": [
                     "Recetas"
                 ],
-                "summary": "Consultar todas las recetas",
-                "description": "Retorna todas las recetas",
+                "summary": "Obtener todas las recetas",
                 "operationId": "7fe2d12ff17a51d03f3e797a145cb881",
                 "responses": {
                     "200": {
-                        "description": "Operación exitosa"
-                    },
-                    "403": {
-                        "description": "No autorizado"
-                    },
-                    "404": {
-                        "description": "No se encontraron recetas"
-                    },
-                    "405": {
-                        "description": "Método no permitido"
+                        "description": "Lista de recetas"
                     }
                 },
                 "security": [
                     {
-                        "bearer_token": []
+                        "sanctum": []
                     }
                 ]
             },
@@ -45,9 +104,8 @@
                 "tags": [
                     "Recetas"
                 ],
-                "summary": "Crear receta",
-                "description": "Crear una nueva receta",
-                "operationId": "fc34e6e4587dc1faa58c704f2af7f516",
+                "summary": "Crear una nueva receta",
+                "operationId": "aeb79d1b0a18743ea7d108a7df38c6a8",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -58,9 +116,7 @@
                                     "titulo",
                                     "descripcion",
                                     "ingredientes",
-                                    "instrucciones",
-                                    "imagen",
-                                    "etiquetas"
+                                    "instrucciones"
                                 ],
                                 "properties": {
                                     "categoria_id": {
@@ -99,7 +155,10 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "Receta creada"
+                        "description": "Receta creada exitosamente"
+                    },
+                    "400": {
+                        "description": "Solicitud inválida"
                     },
                     "403": {
                         "description": "No autorizado"
@@ -107,26 +166,194 @@
                 },
                 "security": [
                     {
-                        "bearer_token": []
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/recetas/{id}": {
+            "get": {
+                "tags": [
+                    "Recetas"
+                ],
+                "summary": "Obtener una receta por ID",
+                "operationId": "868fa1d6f2f2d8e2fbcc18c85844a38f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la receta",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Receta encontrada"
+                    },
+                    "404": {
+                        "description": "Receta no encontrada"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/recetas/{receta}": {
+            "put": {
+                "tags": [
+                    "Recetas"
+                ],
+                "summary": "Actualizar receta",
+                "description": "Actualiza una receta existente por su ID.",
+                "operationId": "6f0268054c67af41fadae502b4f71b1c",
+                "parameters": [
+                    {
+                        "name": "receta",
+                        "in": "path",
+                        "description": "ID de la receta a actualizar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "categoria_id": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "titulo": {
+                                        "type": "string",
+                                        "example": "Receta 1"
+                                    },
+                                    "descripcion": {
+                                        "type": "string",
+                                        "example": "descripcion de la receta"
+                                    },
+                                    "ingredientes": {
+                                        "type": "string",
+                                        "example": "Preparación de la receta"
+                                    },
+                                    "instrucciones": {
+                                        "type": "string",
+                                        "example": "instrucciones de la receta"
+                                    },
+                                    "imagen": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "etiquetas": {
+                                        "type": "string",
+                                        "example": "[1,2,3]"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Receta actualizada con éxito"
+                    },
+                    "403": {
+                        "description": "No autorizado"
+                    },
+                    "404": {
+                        "description": "Receta no encontrada"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Recetas"
+                ],
+                "summary": "Eliminar receta",
+                "description": "Elimina una receta por su ID.",
+                "operationId": "ddc200837c2f9d4412339fd1be688396",
+                "parameters": [
+                    {
+                        "name": "receta",
+                        "in": "path",
+                        "description": "ID de la receta a eliminar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Receta eliminada con éxito"
+                    },
+                    "403": {
+                        "description": "No autorizado"
+                    },
+                    "404": {
+                        "description": "Receta no encontrada"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
                     }
                 ]
             }
         }
     },
+    "components": {
+        "responses": {
+            "422": {
+                "description": "Credenciales incorrectas",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "example": "Las credenciales son incorrectas."
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "securitySchemes": {
+            "sanctum": {
+                "type": "http",
+                "name": "Authorization",
+                "in": "header",
+                "bearerFormat": "token",
+                "scheme": "bearer"
+            }
+        }
+    },
     "tags": [
+        {
+            "name": "Autenticación",
+            "description": "Autenticación"
+        },
         {
             "name": "Recetas",
             "description": "Recetas"
         }
-    ],
-    "components": {
-        "securitySchemes": {
-            "bearer_token": {
-                "type": "apiKey",
-                "description": "Sacntum bearer token",
-                "name": "Authorization",
-                "in": "header"
-            }
-        }
-    }
+    ]
 }

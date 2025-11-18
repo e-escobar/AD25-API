@@ -2,6 +2,9 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator;  // Importar la interfaz Validator
+use Illuminate\Http\Exceptions\HttpResponseException;  // Importar la excepción HttpResponseException
+
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateRecetasRequest extends FormRequest
@@ -29,8 +32,17 @@ class UpdateRecetasRequest extends FormRequest
             'ingredientes' => 'sometimes|string', // Los ingredientes son opcionales y deben ser una cadena
             'instrucciones' => 'sometimes|string', // Las instrucciones son opcionales y deben ser una cadena
             'imagen' => 'sometimes|mimes:webp,jpeg,png,jpg,gif,svg|max:2048', // La imagen es opcional, debe ser un archivo de imagen y no debe exceder los 2MB
-            'etiquetas' => 'sometimes|array', // Las etiquetas son opcionales y deben ser un array
+            'etiquetas' => 'sometimes', // Las etiquetas son opcionales y deben ser un array
         ];
 
+    }
+
+    // Manejar la falla de validación y devolver una respuesta JSON personalizada
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'message' => 'Error de validación en la actualización',
+            'errors' => $validator->errors()
+        ], 422));
     }
 }

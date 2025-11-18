@@ -4,6 +4,9 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+use Illuminate\Contracts\Validation\Validator;  // Importar la interfaz Validator 
+use Illuminate\Http\Exceptions\HttpResponseException;  // Importar la excepción HttpResponseException 
+
 class StoreRecetasRequest extends FormRequest
 {
     /**
@@ -31,5 +34,14 @@ class StoreRecetasRequest extends FormRequest
             'imagen' => 'required|mimes:webp,jpeg,png,jpg,gif,svg|max:2048', // La imagen es opcional, debe ser un archivo de imagen y no debe exceder los 2MB
             'etiquetas' => 'required', // Las etiquetas son opcionales y deben ser un array
         ];
+    }
+
+    // Manejar la falla de validación y devolver una respuesta JSON personalizada
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'message' => 'Error de validación',
+            'errors' => $validator->errors()
+        ], 422));
     }
 }

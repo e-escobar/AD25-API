@@ -1,16 +1,22 @@
 <?php
 
 namespace App\Http\Controllers;
- /**
-  * @OA\Info(
-    *     title="Recetas API REST con Laravel",
-    *     version="1.0.0",
-    *     @OA\Contact(
-    *         email="eescobar@cdhidalgo.tecnm.mx"
-    *     )
-    * )
-    *@OA\Server(url="http://127.0.0.1:8000")
-    */
+
+/**
+ * @OA\Info(
+ *     title="API Documentation",
+ *     version="1.0.0"
+ * )
+ * @OA\SecurityScheme(
+ *     securityScheme="sanctum",
+ *     type="http", 
+ *     scheme="bearer",
+ *     bearerFormat="token",
+ *     in="header",
+ *     name="Authorization"
+ * )
+ * @OA\Server(url="http://localhost:8000")
+ */
 
 abstract class Controller
 {

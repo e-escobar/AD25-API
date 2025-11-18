@@ -171,6 +171,7 @@ return [
         'securityDefinitions' => [
             'securitySchemes' => [
 
+                /*
                 // Sanctum Authentication 
                 'bearer_token' => [ 
                     'type' => 'apiKey',
