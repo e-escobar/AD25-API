@@ -11,6 +11,47 @@ use App\Models\User;  // Importar el modelo User
 
 class LoginController extends Controller
 {
+
+    // Post con swagger para login
+    /**
+     * @OA\Post(
+     *     path="/api/login",
+     *     summary="Iniciar sesión de usuario",
+     *     tags={"Autenticación"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"correo","contraseña","dispositivo"},
+     *             @OA\Property(property="correo", type="string", format="email", example="eescobar@laravel.com"),
+     *            @OA\Property(property="contraseña", type="string", format="password", example="password"),
+     *            @OA\Property(property="dispositivo", type="string", example="Mi dispositivo"),
+     *        ),
+     *    ),
+     *    @OA\Response(
+     *        response=200,
+     *        description="Inicio de sesión exitoso",
+     *       @OA\JsonContent(
+     *           @OA\Property(property="data", type="object",),
+     *              @OA\Property(property="attributes", type="object",),
+     *                 @OA\Property(property="id", type="integer", example=1),
+     *                @OA\Property(property="nombre", type="string", example="Juan Pérez"),
+     *               @OA\Property(property="correo", type="string", example=""),
+     *           ),
+     *              @OA\Property(property="token", type="string", example="token_de_acceso_aqui"),
+     *       ),
+     *   ),
+     *   @OA\Response(
+     *       response=422,
+     *       description="Credenciales incorrectas",
+     *      @OA\JsonContent(
+     *          @OA\Property(property="message", type="string", example="Las credenciales son incorrectas."),
+     *    ),
+     * ),
+     * )
+     * 
+     */ 
+
+    
     public function store(Request $request)
     {
         // Validar los datos de entrada
