@@ -15,7 +15,7 @@ namespace App\Http\Controllers;
  *     in="header",
  *     name="Authorization"
  * )
- * @OA\Server(url="http://localhost:8000")
+ * @OA\Server(url="https://ad25-api-production.up.railway.app")
  */
 
 abstract class Controller
